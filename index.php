@@ -120,6 +120,62 @@ if (pgcd_3(56, 98) != 14) {
 if ($has_error == false) {
     echo "Aucune erreur, félicitation\n";
 }
+// exercice 2
+//2.1 - Moyenne : Écrire une fonction calcMoy qui prend en paramètre un tableau de nombre et retourne la moyenne.
+function calcMoy($numbers) {
+    $sum = array_sum($numbers);
+    $count = count($numbers);
+    if ($count == 0) {
+        return 0; 
+    }
+    return $sum / $count;
+}
+echo calcMoy([2, 4, 6, 8, 10]);
+//2.2 - my_strrev : Écrire une fonction my_strrev qui reproduit le même fonctionnement que la fonction php strrev : Votre fonction ne doit utiliser aucune fonction php (sauf strlen, count et isset)
+
+function my_strrev($str) {
+    $reversed = '';
+    $length = strlen($str);
+
+    // Parcours de la chaîne de la fin vers le début
+    for ($i = $length - 1; $i >= 0; $i--) {
+        if (isset($str[$i])) { 
+            $reversed .= $str[$i];
+        }
+    }
+
+    return $reversed;
+}
+ECHO my_strrev("Hello World!");
+//2.3 - my_str_contains : Écrire une fonction my_str_contains qui reproduit le même fonctionnement que la fonction php str_contains : Votre fonction ne doit utiliser aucune fonction php (sauf strlen, count et isset).
+Function my_str_contains($haystack, $needle) {
+    $haystack_length = strlen($haystack);
+    $needle_length = strlen($needle);
+
+    if ($needle_length == 0) {
+        return true; 
+    }
+
+    for ($i = 0; $i <= $haystack_length - $needle_length; $i++) {
+        $found = true;
+        for ($j = 0; $j < $needle_length; $j++) {
+            if (!isset($haystack[$i + $j]) || $haystack[$i + $j] != $needle[$j]) {
+                $found = false;
+                break;
+            }
+        }
+        if ($found) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+echo my_str_contains("Bonjour", "jour") ? "true" : "false";  
+echo "\n";
+echo my_str_contains("Bonjour", "soir") ? "true" : "false"; 
+?>
 
 
 ?>
