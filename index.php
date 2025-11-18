@@ -175,9 +175,31 @@ Function my_str_contains($haystack, $needle) {
 echo my_str_contains("Bonjour", "jour") ? "true" : "false";  
 echo "\n";
 echo my_str_contains("Bonjour", "soir") ? "true" : "false"; 
+
+//4.1 tableaux à 2 dimensions CALCULE DE NOTE DE CHQUE ELEVE
+
+
+// Tableau des élèves
+$eleves = [
+    ["nom" => "Alice", "notes" => [15, 14, 16]],
+    ["nom" => "Bob", "notes" => [12, 10, 11]],
+    ["nom" => "Claire", "notes" => [18, 17, 16]]
+];
+
+
+// suite a notre logique 2.1 - Moyenne , la calcul se fait automatique pour chaque éléves grâce au devoir précedent en rajoutant la prochaine code
+// Afficher le nom et la moyenne de chaque élève
+foreach ($eleves as $eleve) {
+    $nom = $eleve["nom"];
+    $moyenne = calcMoy($eleve["notes"]);
+    echo "Nom : $nom - Moyenne : " . number_format($moyenne, 2) . "<br>";
+}
+//4.3 - Table de multiplication
+// sa réponse est dans le fichier table.php et table.txt 
+
 ?>
 
 
-?>
+
 
 
