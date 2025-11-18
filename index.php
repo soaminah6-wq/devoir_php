@@ -45,7 +45,7 @@ function doubleBoucle($n) {
 }
 echo doubleBoucle(5);
 //4 - Bonus : PGCD slide suivante
-// Méthode 1 : Algorithme d'Euclide (version classique avec soustraction)
+// Méthode 1 : 
 function pgcd_1($a, $b) {
     while ($a != $b) {
         if ($a > $b) {
@@ -57,7 +57,7 @@ function pgcd_1($a, $b) {
     return $a;
 }
 
-// Méthode 2 : Algorithme d'Euclide (version modulo)
+// Méthode 2 : 
 function pgcd_2($a, $b) {
     while ($b != 0) {
         $r = $a % $b;
@@ -67,7 +67,7 @@ function pgcd_2($a, $b) {
     return $a;
 }
 
-// Méthode 3 : PGCD récursif
+// Méthode 3 : 
 function pgcd_3($a, $b) {
     if ($b == 0) {
         return $a;
@@ -120,7 +120,6 @@ if (pgcd_3(56, 98) != 14) {
 if ($has_error == false) {
     echo "Aucune erreur, félicitation\n";
 }
-
 // exercice 2
 //2.1 - Moyenne : Écrire une fonction calcMoy qui prend en paramètre un tableau de nombre et retourne la moyenne.
 function calcMoy($numbers) {
@@ -177,3 +176,8 @@ echo my_str_contains("Bonjour", "jour") ? "true" : "false";
 echo "\n";
 echo my_str_contains("Bonjour", "soir") ? "true" : "false"; 
 ?>
+
+
+?>
+
+
