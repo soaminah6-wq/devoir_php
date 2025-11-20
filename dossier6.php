@@ -10,6 +10,31 @@ if (isset($_GET["action"]) && $_GET["action"] === "logout") {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $_SESSION["username"] = $_POST["username"];
 }
+
+// relions la base de données formulaire dont sa table on l'a appelé user
+
+try {
+    $dbh = new PDO('mysql:host=localhost;dbname=formulaire;charset=utf8', 'root', '');
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die( $e->getMessage());
+}
+
+// Traitement du formulaire d'enregistrement
+if(isset($_POST['register'])) {
+   if($_POST['username'] != "" && $_POST['password'] != "") {
+       
+       $hash= password_hash($_POST['password'], PASSWORD_BCRYPT);
+       $sth = $dbh->prepare("INSERT INTO `user` (username, password) VALUES (:username, :password)");
+       $sth->bindParam(':username', $username);
+       $sth->bindParam(':password', $password);
+       $sth->execute([
+              'username' => $_POST['username'],
+              'password' => $hash
+       ]);
+   
+}}
+
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <h1>Formulaire</h1>
 
+
 <?php
 
-// Vérifier si la variable de session username existe
-if (!isset($_SESSION["username"])) {
-
-    // Si elle n'existe pas → afficher le formulaire (SE CONNECTER)
+if (isset($_POST["register"]))
+     {
+    
+    //pour enregistrer un nouvel utilisateur
     echo '
     <form method="post" action="">
         <label for="username">Username :</label>
@@ -36,20 +62,47 @@ if (!isset($_SESSION["username"])) {
         <label for="password">Password :</label>
         <input type="password" name="password" id="password" required><br>
 
-        <button type="submit">Se connecter</button>
+        <button type="submit">Valider</button>
     </form>
     ';
 
-} else {
+     }
 
-    // Si elle existe → message de bienvenue + bouton SE DÉCONNECTER
-    echo "<h2>Bienvenue " . htmlspecialchars($_SESSION['username']) . " !</h2>";
-
-    // Bouton se déconnecter = retourne au formulaire
-    echo '<a href="?action=logout"><button>Se déconnecter</button></a>';
-}
-
+     
 ?>
 
+<h1>connection </h1>
+<?php 
+if(isset($_POST['connect'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Récupérer l'utilisateur depuis la base de données
+    $stmt = $dbh->prepare("SELECT * FROM `user` WHERE username = :username");
+    $stmt->execute([':username' => $username]);
+    $user = $stmt=$sth->fetch(PDO::FETCH_ASSOC);
+ if($user){
+    if(password_verify($password, $user['password'])){
+        $_SESSION['username'] = $username;
+        echo "Connexion réussie ! Bienvenue, " . htmlspecialchars($username) . ". <a href='?action=logout'>Se déconnecter</a>";
+    } else {
+        echo "Mot de passe incorrect.";
+    }
+ }
+    
+
+// pour se connecter les anciens utilisateurs
+echo '<form method="post" action="">
+    <label for="username">Username :</label>
+    <input type="text" name="username" id="username" required><br>
+
+    <label for="password">Password :</label>
+    <input type="password" name="password" id="password" required><br>
+
+    <button type="submit">Valider</button>';
+    }
+    ?>
+    
+</form>
 </body>
 </html>
