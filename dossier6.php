@@ -7,6 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $_SESSION["username"] = $_POST["username"];
 }
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +39,14 @@ if (!isset($_SESSION["username"])) {
     echo "<h2>Bienvenue " . htmlspecialchars($_SESSION['username']) . " !</h2>";
 }
 
+   // Si on clique sur "changer de nom"
+if (isset($_GET["action"]) && $_GET["action"] === "reset") {
+    
+    unset($_SESSION["username"]); // Supprimer seulement le username
+
+}
+// bouton de retour au formulaire
+echo '<a href="?action=reset">retour</a>';  
 ?>
 
 </body>
